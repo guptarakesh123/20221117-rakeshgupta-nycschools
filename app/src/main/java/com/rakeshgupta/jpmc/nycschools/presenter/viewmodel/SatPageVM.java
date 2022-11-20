@@ -9,9 +9,9 @@ import androidx.lifecycle.ViewModel;
 import com.rakeshgupta.jpmc.nycschools.common.application.NycSchoolsApp;
 import com.rakeshgupta.jpmc.nycschools.model.SatScore;
 import com.rakeshgupta.jpmc.nycschools.model.School;
+import com.rakeshgupta.jpmc.nycschools.presenter.repos.Repository;
 import com.rakeshgupta.jpmc.nycschools.presenter.repos.inmemory.CacheEnabledSatDataObserver;
 import com.rakeshgupta.jpmc.nycschools.presenter.repos.inmemory.LocalInMemoryCache;
-import com.rakeshgupta.jpmc.nycschools.presenter.repos.network.Repository;
 import com.rakeshgupta.jpmc.nycschools.presenter.schedulers.DefaultSchedulerProvider;
 import com.rakeshgupta.jpmc.nycschools.presenter.schedulers.SchedulerProvider;
 
@@ -29,10 +29,15 @@ public class SatPageVM extends ViewModel {
     private SchedulerProvider mSchedulerProvider;
 
     public SatPageVM() {
+        this(Repository.getRepository(NycSchoolsApp.getNycSchoolsAppContext(), null),
+                new DefaultSchedulerProvider());
+    }
+
+    public SatPageVM(Repository repository, SchedulerProvider scheduler) {
         mDisposables = new CompositeDisposable();
         mDisplayedSatScore = new MutableLiveData<>();
-        mRepository = Repository.getRepository();
-        mSchedulerProvider = new DefaultSchedulerProvider();
+        mRepository = repository;
+        mSchedulerProvider = scheduler;
     }
 
     public void init(School s) {
@@ -49,14 +54,14 @@ public class SatPageVM extends ViewModel {
         mDisposables.add(
                 mRepository.getSatResults(s.dbn)
                         .observeOn(mSchedulerProvider.ui())
-                        .subscribeWith(new CacheEnabledSatDataObserver() {
+                        .subscribeWith(new CacheEnabledSatDataObserver(mRepository) {
                             @Override
                             public void onSuccess(List<SatScore> scores) {
                                 super.onSuccess(scores);
                                 SatScore satScore =
                                         LocalInMemoryCache.INSTANCE.getSatScoreFromCache(s.dbn);
 
-                                if (satScore != null) mDisplayedSatScore.setValue(satScore);
+                                mDisplayedSatScore.setValue(satScore);
                             }
 
                             @Override

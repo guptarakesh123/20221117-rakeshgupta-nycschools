@@ -8,8 +8,8 @@ import androidx.lifecycle.ViewModel;
 
 import com.rakeshgupta.jpmc.nycschools.common.application.NycSchoolsApp;
 import com.rakeshgupta.jpmc.nycschools.model.School;
+import com.rakeshgupta.jpmc.nycschools.presenter.repos.Repository;
 import com.rakeshgupta.jpmc.nycschools.presenter.repos.inmemory.CacheEnabledSchoolDataObserver;
-import com.rakeshgupta.jpmc.nycschools.presenter.repos.network.Repository;
 import com.rakeshgupta.jpmc.nycschools.presenter.schedulers.DefaultSchedulerProvider;
 import com.rakeshgupta.jpmc.nycschools.presenter.schedulers.SchedulerProvider;
 
@@ -29,13 +29,18 @@ public class HomePageVM extends ViewModel {
     private final SchedulerProvider mSchedulerProvider;
 
     public HomePageVM() {
+        this(Repository.getRepository(NycSchoolsApp.getNycSchoolsAppContext(), null),
+                new DefaultSchedulerProvider());
+    }
+
+    public HomePageVM(Repository repository, SchedulerProvider scheduler) {
         mDisposables = new CompositeDisposable();
         mDisplayedSchools = new MutableLiveData<>();
         mSearchQuery = new MutableLiveData<>();
         mAllSchools = new ArrayList<>();
 
-        mRepository = Repository.getRepository();
-        mSchedulerProvider = new DefaultSchedulerProvider();
+        mRepository = repository;
+        mSchedulerProvider = scheduler;
         resetData();
     }
 
@@ -53,10 +58,11 @@ public class HomePageVM extends ViewModel {
         mDisposables.add(
                 mRepository.getAllSchools()
                         .observeOn(mSchedulerProvider.ui())
-                        .subscribeWith(new CacheEnabledSchoolDataObserver() {
+                        .subscribeWith(new CacheEnabledSchoolDataObserver(mRepository) {
                             @Override
                             public void onSuccess(List<School> schools) {
                                 super.onSuccess(schools);
+                                mAllSchools.clear();
                                 mAllSchools.addAll(schools);
                                 mDisplayedSchools.setValue(schools);
                             }

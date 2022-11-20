@@ -1,10 +1,7 @@
 package com.rakeshgupta.jpmc.nycschools.view;
 
-import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;

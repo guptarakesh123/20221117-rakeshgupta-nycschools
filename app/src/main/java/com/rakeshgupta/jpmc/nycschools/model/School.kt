@@ -76,5 +76,4 @@ data class School (
     @SerializedName("borough")
     @JvmField
     val borough: String
-
     )

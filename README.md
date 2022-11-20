@@ -1,3 +1,6 @@
+# Working solution's video
+https://youtu.be/kRvpl0C8Jz0
+
 # 20221117-rakeshgupta-nycschools
 Code challenge for NYC Schools Project
 

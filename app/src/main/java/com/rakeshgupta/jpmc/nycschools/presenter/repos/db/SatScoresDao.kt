@@ -1,12 +1,10 @@
 package com.rakeshgupta.jpmc.nycschools.presenter.repos.db
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.rakeshgupta.jpmc.nycschools.model.SatScore
-import com.rakeshgupta.jpmc.nycschools.model.School
 
 @Dao
 interface SatScoresDao {

@@ -1,12 +1,10 @@
 package com.rakeshgupta.jpmc.nycschools.view;
 
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
-
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Bundle;
 
 import com.rakeshgupta.jpmc.nycschools.R;
 import com.rakeshgupta.jpmc.nycschools.common.serializer.GsonParser;

@@ -46,7 +46,7 @@ object LocalInMemoryCache {
 
     fun setSatCache (satList : List<SatScore>) {
         satList.forEach {
-            it.dbn?.also{x -> satScoreCache[it.dbn] = it}
+            it.dbn.also{_ -> satScoreCache[it.dbn] = it}
         }
         satScoreCacheTimestamp = System.currentTimeMillis();
     }
