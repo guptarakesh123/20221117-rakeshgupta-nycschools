@@ -1,7 +1,5 @@
 package com.rakeshgupta.jpmc.nycschools.presenter.repos.network;
 
-import android.content.Context;
-
 import com.rakeshgupta.jpmc.nycschools.common.application.NycSchoolsApp;
 import com.rakeshgupta.jpmc.nycschools.model.SatScore;
 import com.rakeshgupta.jpmc.nycschools.model.School;

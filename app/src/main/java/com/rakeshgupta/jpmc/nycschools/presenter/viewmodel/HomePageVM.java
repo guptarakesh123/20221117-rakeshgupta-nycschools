@@ -44,7 +44,7 @@ public class HomePageVM extends ViewModel {
         mDisposables.add(
             Single.just(1)
                 .subscribeOn(mSchedulerProvider.io())
-                .map(x->{asyncUpdateAllSchools(); return x;})
+                .doOnSuccess(x->asyncUpdateAllSchools())
                 .subscribe()
         );
     }

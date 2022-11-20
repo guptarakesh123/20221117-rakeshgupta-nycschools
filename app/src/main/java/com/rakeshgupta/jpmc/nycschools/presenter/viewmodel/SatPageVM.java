@@ -39,7 +39,7 @@ public class SatPageVM extends ViewModel {
         mDisposables.add(
                 Single.just(1)
                         .subscribeOn(mSchedulerProvider.io())
-                        .map(x->{asyncUpdateSatScores(s); return x;})
+                        .doOnSuccess(x->asyncUpdateSatScores(s))
                         .subscribe()
         );
     }
@@ -48,7 +48,6 @@ public class SatPageVM extends ViewModel {
         mDisplayedSchool = s;
         mDisposables.add(
                 mRepository.getSatResults(s.dbn)
-                        .subscribeOn(mSchedulerProvider.io())
                         .observeOn(mSchedulerProvider.ui())
                         .subscribeWith(new CacheEnabledSatDataObserver() {
                             @Override

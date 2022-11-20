@@ -17,12 +17,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun satScoresDao(): SatScoresDao
 
     companion object {
-
-        @Volatile
         private var INSTANCE: AppDatabase? = null
-        private val NUMBER_OF_THREADS = 10
-        val databaseWriteExecutor: ExecutorService = Executors.newFixedThreadPool(NUMBER_OF_THREADS)
-
         fun getDatabase(context: Context): AppDatabase? {
             if (INSTANCE == null) {
                 synchronized(AppDatabase::class.java) {
