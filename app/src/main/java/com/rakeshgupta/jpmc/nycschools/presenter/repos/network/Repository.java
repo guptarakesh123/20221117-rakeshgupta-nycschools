@@ -52,9 +52,10 @@ public class Repository {
         if (LocalInMemoryCache.INSTANCE.hasSatCache()) {
             List<SatScore> cachedScores = new ArrayList<>(1);
             SatScore cache = LocalInMemoryCache.INSTANCE.getSatScoreFromCache(dbn);
-            if (cache != null) cachedScores.add(cache);
-
-            return Single.<List<SatScore>>just(cachedScores);
+            if (cache != null) {
+                cachedScores.add(cache);
+                return Single.<List<SatScore>>just(cachedScores);
+            }
         }
 
         // check in database
@@ -62,9 +63,10 @@ public class Repository {
         SatScore satScore = db.satScoresDao().get(dbn);
         List<SatScore> dbScores = new ArrayList<>(1);
         if (satScore != null) dbScores.add(satScore);
-        if (satScore != null) return Single.<List<SatScore>>just(dbScores);
+        if (satScore != null && satScore.dbn != null && !satScore.dbn.isEmpty())
+            return Single.<List<SatScore>>just(dbScores);
 
-        // local cache not built yet, make a network call
+        // local cache not built yet, db is empty, make a network call
         return getSchoolApi().getAllSatScores();
     }
 }
