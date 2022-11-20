@@ -212,56 +212,15 @@
                 app:layout_constraintStart_toEndOf="@id/website_title"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/phone" />
-            <ImageButton
-                android:id="@+id/location_button"
-                android:layout_width="0dp"
+
+            <include layout="@layout/contact_actions"
+                android:id="@+id/details_contact_actions"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:background="@android:color/transparent"
-                android:scaleType="fitCenter"
-                app:layout_constraintEnd_toStartOf="@id/send_email_button"
+                android:layout_width="match_parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/website"
-                app:srcCompat="@android:drawable/ic_dialog_map" />
-
-            <ImageButton
-                android:id="@+id/send_email_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:background="@android:color/transparent"
-                android:scaleType="fitCenter"
-                app:layout_constraintEnd_toStartOf="@id/dial_button"
-                app:layout_constraintStart_toEndOf="@id/location_button"
-                app:layout_constraintTop_toBottomOf="@id/website"
-                app:srcCompat="@android:drawable/ic_dialog_email" />
-
-            <ImageButton
-                android:id="@+id/dial_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:background="@android:color/transparent"
-                android:scaleType="fitCenter"
-                app:layout_constraintBottom_toBottomOf="@id/send_email_button"
-                app:layout_constraintEnd_toStartOf="@id/open_website_button"
-                app:layout_constraintStart_toEndOf="@id/send_email_button"
-                app:layout_constraintTop_toTopOf="@id/send_email_button"
-                app:srcCompat="@android:drawable/ic_menu_call" />
-
-            <ImageButton
-                android:id="@+id/open_website_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:background="@android:color/transparent"
-                android:scaleType="fitCenter"
-                app:layout_constraintBottom_toBottomOf="@id/dial_button"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@id/dial_button"
-                app:layout_constraintTop_toTopOf="@id/dial_button"
-                app:srcCompat="@android:drawable/ic_dialog_info" />
+                app:layout_constraintTop_toBottomOf="@id/website" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </layout>

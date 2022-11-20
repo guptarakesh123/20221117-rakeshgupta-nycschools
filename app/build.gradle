@@ -103,4 +103,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version"
     annotationProcessor "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
     implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
+
+
+    implementation "androidx.cardview:cardview:1.0.0"
 }

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <ImageButton
+        android:id="@+id/send_email_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_margin="20dp"
+        android:padding="5dp"
+        android:scaleType="fitCenter"
+        android:background="@drawable/button_selector"
+        app:tint="@color/colorButtonIcons"
+        app:srcCompat="@android:drawable/ic_dialog_email" />
+
+    <ImageButton
+        android:id="@+id/location_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_margin="20dp"
+        android:padding="5dp"
+        android:scaleType="fitCenter"
+        android:background="@drawable/button_selector"
+        app:tint="@color/colorButtonIcons"
+        app:srcCompat="@android:drawable/ic_dialog_map" />
+
+    <ImageButton
+        android:id="@+id/open_website_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_margin="20dp"
+        android:padding="5dp"
+        android:background="@drawable/button_selector"
+        app:tint="@color/colorButtonIcons"
+        android:scaleType="fitCenter"
+        app:srcCompat="@android:drawable/ic_dialog_info" />
+
+    <ImageButton
+        android:id="@+id/dial_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_margin="20dp"
+        android:padding="5dp"
+        android:background="@drawable/button_selector"
+        app:tint="@color/colorButtonIcons"
+        android:scaleType="fitCenter"
+        app:srcCompat="@android:drawable/ic_menu_call" />
+</LinearLayout>

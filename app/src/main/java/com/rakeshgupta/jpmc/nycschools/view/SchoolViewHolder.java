@@ -1,14 +1,10 @@
 package com.rakeshgupta.jpmc.nycschools.view;
 
-import android.app.Activity;
-import android.app.Dialog;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,14 +23,28 @@ class SchoolViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(School s) {
-        String name = s.schoolName;
-        TextView nameView = mView.findViewById(R.id.single_school);
-        nameView.setText(name);
+        TextView nameView = mView.findViewById(R.id.home_school_name);
+        nameView.setText(s.schoolName);
+
+        TextView numStudentsView = mView.findViewById(R.id.num_students);
+        numStudentsView.setText(s.totalStudents);
+
+        TextView borough = mView.findViewById(R.id.borough_name);
+        borough.setText(s.borough);
+
         mView.setOnClickListener(ignoredView -> {
             mActivity.startActivity(
                     new Intent(mActivity, DetailsActivity.class)
                             .putExtra("school", GsonParser.INSTANCE.gson.toJson(s))
             );
         });
+
+        new ActionBarManager().setupActionBar(
+                mActivity, s,
+                mView.findViewById(R.id.send_email_button),
+                mView.findViewById(R.id.dial_button),
+                mView.findViewById(R.id.location_button),
+                mView.findViewById(R.id.open_website_button)
+        );
     }
 }

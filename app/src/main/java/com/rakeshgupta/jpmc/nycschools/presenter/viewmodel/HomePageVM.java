@@ -58,9 +58,10 @@ public class HomePageVM extends ViewModel {
 
                             @Override
                             public void onError(Throwable e) {
-                                Toast.makeText(NycSchoolsApp.getNycSchoolsAppContext(),
-                                        "download error, check internet",
-                                        Toast.LENGTH_LONG).show();
+                                System.err.println("error : " + e);
+//                                Toast.makeText(NycSchoolsApp.getNycSchoolsAppContext(),
+//                                        "download error, check internet",
+//                                        Toast.LENGTH_LONG).show();
                             }
                         })
         );

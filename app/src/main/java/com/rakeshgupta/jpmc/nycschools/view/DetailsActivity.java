@@ -55,39 +55,12 @@ public class DetailsActivity extends AppCompatActivity {
         mBinding.phone.setText(school.phoneNumber);
         mBinding.website.setText(school.website);
 
-        if (school.schoolEmail != null && !school.schoolEmail.isEmpty()) {
-            mBinding.sendEmailButton.setOnClickListener(ignored -> {
-                Intent intent=new Intent(Intent.ACTION_SEND);
-                intent.setData(Uri.parse("mailto:"));
-                intent.putExtra(Intent.EXTRA_EMAIL, new String[]{school.schoolEmail});
-                intent.setType("text/html");
-                startActivity(Intent.createChooser(intent, "Send email to school"));
-            });
-        }
-
-        if (school.phoneNumber != null && !school.phoneNumber.isEmpty()) {
-            mBinding.dialButton.setOnClickListener(ignored -> {
-                startActivity(new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", school.phoneNumber, null)));
-            });
-        }
-
-        if (school.latitude != null && !school.latitude.isEmpty()
-                && school.longitude != null && !school.longitude.isEmpty()) {
-            mBinding.locationButton.setOnClickListener(ignored -> {
-                String address = school.latitude + "," + school.longitude;
-                Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
-                        Uri.parse("geo:" + address + "?q="+address +"("+school.schoolName+")"));
-                startActivity(intent);
-            });
-        }
-
-        if (school.website != null && !school.website.isEmpty()) {
-            mBinding.openWebsiteButton.setOnClickListener(ignored -> {
-                final Uri uri = Uri.parse(school.website).buildUpon().scheme("https").build();
-                Intent intent = new Intent(android.content.Intent.ACTION_VIEW,uri);
-                startActivity(intent);
-            });
-        }
-
+        new ActionBarManager().setupActionBar(
+                this, school,
+                mBinding.detailsContactActions.sendEmailButton,
+                mBinding.detailsContactActions.dialButton,
+                mBinding.detailsContactActions.locationButton,
+                mBinding.detailsContactActions.openWebsiteButton
+                );
     }
 }

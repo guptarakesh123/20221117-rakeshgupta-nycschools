@@ -16,7 +16,7 @@
         <activity
             android:name=".view.DetailsActivity"
             android:screenOrientation="portrait"
-            android:exported="true"
+            android:exported="false"
             android:launchMode="singleTop">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -36,7 +36,6 @@
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
-
         </activity>
     </application>
 

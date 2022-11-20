@@ -53,6 +53,10 @@ data class School (
 
     @SerializedName("state_code")
     @JvmField
-    val stateCode: String
+    val stateCode: String,
+
+    @SerializedName("borough")
+    @JvmField
+    val borough: String
 
     )
