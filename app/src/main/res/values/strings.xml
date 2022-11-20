@@ -3,4 +3,15 @@
     <string name="search_title">Search a school</string>
     <string name="clear_search">Clear Search</string>
     <string name="searching">Searching : </string>
+    <string name="unknown_data">unknown</string>
+    <string name="number_of_students">Number of students</string>
+    <string name="borough">Borough</string>
+    <string name="sat_scores">SAT Scores</string>
+    <string name="critical_reading_score">Critical Reading Score</string>
+    <string name="writing_score">Writing Score</string>
+    <string name="math_title">Math title</string>
+    <string name="contact_the_school">Contact the school</string>
+    <string name="address">Address</string>
+    <string name="phone_number">Phone number</string>
+    <string name="website">Website</string>
 </resources>

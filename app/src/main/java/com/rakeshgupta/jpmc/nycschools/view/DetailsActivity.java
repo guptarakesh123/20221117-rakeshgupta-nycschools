@@ -32,7 +32,7 @@ public class DetailsActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mViewModel.asyncUpdateSatScores(school);
+        mViewModel.init(school);
     }
 
     @Override

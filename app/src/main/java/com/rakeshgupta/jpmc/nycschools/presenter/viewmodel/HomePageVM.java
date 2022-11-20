@@ -1,6 +1,6 @@
 package com.rakeshgupta.jpmc.nycschools.presenter.viewmodel;
 
-import android.widget.Toast;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -8,8 +8,8 @@ import androidx.lifecycle.ViewModel;
 
 import com.rakeshgupta.jpmc.nycschools.common.application.NycSchoolsApp;
 import com.rakeshgupta.jpmc.nycschools.model.School;
-import com.rakeshgupta.jpmc.nycschools.presenter.repos.db.CacheEnabledSchoolDataObserver;
-import com.rakeshgupta.jpmc.nycschools.presenter.repos.network.NetworkRepository;
+import com.rakeshgupta.jpmc.nycschools.presenter.repos.inmemory.CacheEnabledSchoolDataObserver;
+import com.rakeshgupta.jpmc.nycschools.presenter.repos.network.Repository;
 import com.rakeshgupta.jpmc.nycschools.presenter.schedulers.DefaultSchedulerProvider;
 import com.rakeshgupta.jpmc.nycschools.presenter.schedulers.SchedulerProvider;
 
@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import io.reactivex.Single;
 import io.reactivex.disposables.CompositeDisposable;
 
 public class HomePageVM extends ViewModel {
@@ -24,7 +25,7 @@ public class HomePageVM extends ViewModel {
     private final MutableLiveData<String> mSearchQuery;
     private final List<School> mAllSchools;
     private final CompositeDisposable mDisposables;
-    private final NetworkRepository mNetworkRepository;
+    private final Repository mRepository;
     private final SchedulerProvider mSchedulerProvider;
 
     public HomePageVM() {
@@ -33,20 +34,24 @@ public class HomePageVM extends ViewModel {
         mSearchQuery = new MutableLiveData<>();
         mAllSchools = new ArrayList<>();
 
-        mNetworkRepository = new NetworkRepository();
+        mRepository = Repository.getRepository(NycSchoolsApp.getNycSchoolsAppContext());
         mSchedulerProvider = new DefaultSchedulerProvider();
         resetData();
     }
 
     public void resetData() {
         clearSearch();
-        asyncUpdateAllSchools();
+        mDisposables.add(
+            Single.just(1)
+                .subscribeOn(mSchedulerProvider.io())
+                .map(x->{asyncUpdateAllSchools(); return x;})
+                .subscribe()
+        );
     }
 
     private void asyncUpdateAllSchools() {
         mDisposables.add(
-                mNetworkRepository.getAllSchools()
-                        .subscribeOn(mSchedulerProvider.io())
+                mRepository.getAllSchools()
                         .observeOn(mSchedulerProvider.ui())
                         .subscribeWith(new CacheEnabledSchoolDataObserver() {
                             @Override
@@ -58,13 +63,9 @@ public class HomePageVM extends ViewModel {
 
                             @Override
                             public void onError(Throwable e) {
-                                System.err.println("error : " + e);
-//                                Toast.makeText(NycSchoolsApp.getNycSchoolsAppContext(),
-//                                        "download error, check internet",
-//                                        Toast.LENGTH_LONG).show();
+                                Log.e("network", "failed to fetch Schools from network");
                             }
-                        })
-        );
+                        }));
     }
 
     public void clearSearch() {
