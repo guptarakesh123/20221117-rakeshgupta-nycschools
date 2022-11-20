@@ -10,6 +10,9 @@ import java.util.List;
 import io.reactivex.Single;
 import io.reactivex.observers.DisposableSingleObserver;
 
+/*
+this class will record the output of the network into the database and also in the in memory cache
+ */
 public abstract class CacheEnabledSchoolDataObserver
         extends DisposableSingleObserver<List<School>> {
 

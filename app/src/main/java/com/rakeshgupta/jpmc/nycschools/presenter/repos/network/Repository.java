@@ -38,7 +38,8 @@ public class Repository {
         List<School> cache = LocalInMemoryCache.INSTANCE.getSchoolsCache();
         if (cache != null && !cache.isEmpty()) return Single.<List<School>>just(cache);
 
-        //check in database
+        // check in database
+        //TODO: implement cache expiry for database also
         AppDatabase db = AppDatabase.Companion.getDatabase(NycSchoolsApp.getNycSchoolsAppContext());
         List<School> dbList = db.schoolDao().getAll();
         if (dbList != null && !dbList.isEmpty()) return Single.<List<School>>just(dbList);
@@ -47,6 +48,10 @@ public class Repository {
         return getSchoolApi().getAllSchools();
     }
 
+    /*
+    while we only want one SatScore object, the api is not set up to return just one. So reading all
+    as long as this object is not in local memory or in the database
+     */
     public Single<List<SatScore>> getSatResults(String dbn) {
         // check in local cache
         if (LocalInMemoryCache.INSTANCE.hasSatCache()) {
@@ -59,6 +64,7 @@ public class Repository {
         }
 
         // check in database
+        //TODO: implement cache expiry for database also
         AppDatabase db = AppDatabase.Companion.getDatabase(NycSchoolsApp.getNycSchoolsAppContext());
         SatScore satScore = db.satScoresDao().get(dbn);
         List<SatScore> dbScores = new ArrayList<>(1);

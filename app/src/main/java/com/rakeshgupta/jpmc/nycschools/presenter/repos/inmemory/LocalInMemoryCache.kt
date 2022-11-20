@@ -2,11 +2,16 @@ package com.rakeshgupta.jpmc.nycschools.presenter.repos.inmemory
 
 import com.rakeshgupta.jpmc.nycschools.model.SatScore
 import com.rakeshgupta.jpmc.nycschools.model.School
-
+/*
+purpose of this class is to prevent any network calls and any database calls.
+Since the entire data needed is very small (total < 500 schools) , why not just cache them in memory
+for performance gains. Total memory size would be only a couple of MBs
+ */
 object LocalInMemoryCache {
     private const val MAX_TIMESTAMP = 15 * 1000 * 60; // 15 minutes for cache expiry
+
     private val emptySchoolsCache = ArrayList<School>()
-    private var schoolsCacheTimestamp: Long = 0
+    private var schoolsCacheTimestamp: Long = 0  // last time the schools cache was updated
 
     var schoolsCache: List<School> = emptySchoolsCache
         get() {
@@ -22,7 +27,7 @@ object LocalInMemoryCache {
         }
 
     private val satScoreCache: MutableMap<String, SatScore> = HashMap()
-    private var satScoreCacheTimestamp: Long = 0
+    private var satScoreCacheTimestamp: Long = 0  // last time the scores cache was updated
     fun hasSatCache () : Boolean {
         if (System.currentTimeMillis() > satScoreCacheTimestamp + MAX_TIMESTAMP) {
             satScoreCache.clear()
