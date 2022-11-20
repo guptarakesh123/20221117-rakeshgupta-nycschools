@@ -31,7 +31,7 @@ public class SatPageVM extends ViewModel {
     public SatPageVM() {
         mDisposables = new CompositeDisposable();
         mDisplayedSatScore = new MutableLiveData<>();
-        mRepository = Repository.getRepository(NycSchoolsApp.getNycSchoolsAppContext());
+        mRepository = Repository.getRepository();
         mSchedulerProvider = new DefaultSchedulerProvider();
     }
 

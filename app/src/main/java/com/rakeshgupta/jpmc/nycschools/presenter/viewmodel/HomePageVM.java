@@ -34,7 +34,7 @@ public class HomePageVM extends ViewModel {
         mSearchQuery = new MutableLiveData<>();
         mAllSchools = new ArrayList<>();
 
-        mRepository = Repository.getRepository(NycSchoolsApp.getNycSchoolsAppContext());
+        mRepository = Repository.getRepository();
         mSchedulerProvider = new DefaultSchedulerProvider();
         resetData();
     }

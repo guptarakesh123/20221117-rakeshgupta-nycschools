@@ -16,15 +16,13 @@ import io.reactivex.Single;
 public class Repository {
     private static volatile Repository INSTANCE;
 
-    Repository(Context context) {
+    private Repository(){}
 
-    }
-
-    public static Repository getRepository(final Context context) {
+    public static Repository getRepository() {
         if (INSTANCE == null) {
             synchronized (Repository.class) {
                 if (INSTANCE == null) {
-                    INSTANCE = new Repository(context);
+                    INSTANCE = new Repository();
                 }
             }
         }
